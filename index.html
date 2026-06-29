@@ -1,0 +1,2270 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vére | Posicionamento de Elite</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --imperial: #3A003A;
+      --deep-purple: #54004F;
+      --plum: #760D63;
+      --magenta: #A33C8C;
+      --lilac: #C76DB2;
+      --off-white: #F7F4F2;
+      --white: #FFFFFF;
+      --graphite: #1F1F1F;
+      --dark-gray: #383838;
+      --mid-gray: #707070;
+      --light-gray: #D9D9D9;
+      --beige: #EFE9E5;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: #0a000a;
+      color: var(--off-white);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    ::selection { background: var(--magenta); color: white; }
+
+    /* ─── ACESSIBILIDADE OCULTA (KEYBOARD FOCUS) ─── */
+    *:focus:not(:focus-visible) { outline: none; }
+    *:focus-visible {
+      outline: 2px solid var(--magenta);
+      outline-offset: 4px;
+      border-radius: 4px;
+      box-shadow: 0 0 12px rgba(163, 60, 140, 0.5);
+    }
+
+    /* ─── SCROLLBAR ─── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: #0a000a; }
+    ::-webkit-scrollbar-thumb { background: var(--magenta); border-radius: 2px; }
+
+    /* ─── HEADER ─── */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 0 40px;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(10,0,10,0.6);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid rgba(199, 109, 178, 0.08);
+      transition: all 0.4s ease;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .logo-mark {
+      height: 56px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .logo-mark img { height: 56px; width: auto; object-fit: contain; }
+    nav { display: flex; align-items: center; gap: 4px; }
+    nav a {
+      color: rgba(247,244,242,0.6);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 400;
+      padding: 8px 16px;
+      border-radius: 99px;
+      transition: all 0.2s;
+    }
+    nav a:hover, nav a.active { color: white; }
+
+    .btn-nav {
+      background: transparent !important;
+      color: white !important;
+      padding: 9px 20px !important;
+      border-radius: 9999px !important;
+      font-weight: 400 !important;
+      font-size: 12px !important;
+      letter-spacing: 0.05em !important;
+      transition: all 0.2s !important;
+      border: 1px solid var(--magenta) !important;
+      text-transform: uppercase;
+    }
+    .btn-nav:hover { box-shadow: inset 0 0 0 1px var(--magenta) !important; }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      text-align: left;
+      padding: 120px 6% 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    /* Real background image with cinematic overlay */
+    .hero-bg-img {
+      position: absolute;
+      inset: 0;
+      background-image: url('hero-atual.png');
+      background-size: cover;
+      background-position: center 20%;
+      background-repeat: no-repeat;
+    }
+
+    /* Dark overlay for text legibility - WCAG AAA compliant */
+    .hero-bg-img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(10,0,10,0.72) 0%,
+        rgba(10,0,10,0.55) 40%,
+        rgba(10,0,10,0.80) 80%,
+        rgba(10,0,10,0.98) 100%
+      );
+    }
+
+    /* Subtle magenta color tone on top of photo */
+    .hero-bg-img::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 40%, rgba(84,0,79,0.25) 0%, transparent 70%);
+      z-index: 1;
+    }
+
+    /* Grid noise overlay */
+    .hero-bg-grid {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.01) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.01) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(163,60,140,0.06);
+      border: 1px solid rgba(163,60,140,0.2);
+      border-radius: 99px;
+      padding: 6px 16px 6px 8px;
+      margin-bottom: 32px;
+      animation: fadeInUp 0.8s ease both;
+    }
+    .badge-dot {
+      width: 8px; height: 8px;
+      background: var(--magenta);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(0.85); }
+    }
+    .badge span {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--lilac);
+    }
+
+    h1.hero-title {
+      font-size: clamp(2.4rem, 5.5vw, 5rem);
+      font-weight: 400;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: white;
+      margin-bottom: 24px;
+      max-width: 900px;
+      animation: fadeInUp 0.8s 0.1s ease both;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #fff 0%, var(--lilac) 50%, var(--magenta) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 1.8vw, 1.2rem);
+      font-weight: 300;
+      color: rgba(247,244,242,0.65);
+      max-width: 620px;
+      margin: 0 0 48px 0;
+      line-height: 1.7;
+      animation: fadeInUp 0.8s 0.2s ease both;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      animation: fadeInUp 0.8s 0.3s ease both;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: white;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 14px 32px;
+      border-radius: 9999px;
+      transition: all 0.3s ease;
+      border: 1px solid var(--magenta);
+    }
+    .btn-primary:hover { box-shadow: inset 0 0 0 1px var(--magenta); }
+    .btn-primary:active { transform: translateY(0) scale(0.98); }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: rgba(247,244,242,0.8);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      padding: 14px 28px;
+      border-radius: 9999px;
+      border: 1px solid rgba(163,60,140,0.3);
+      transition: all 0.3s ease;
+    }
+    .btn-secondary:hover { border-color: rgba(163,60,140,0.6); color: white; }
+
+    /* ─── SECTION LABELS ─── */
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      background: transparent;
+      padding: 0;
+      font-family: monospace;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(247, 244, 242, 0.5);
+      margin-bottom: 20px;
+    }
+    .section-label::before { content: "[ "; margin-right: 4px; }
+    .section-label::after { content: " ]"; margin-left: 4px; }
+
+    /* ─── SECTION: DOR ─── */
+    #dor {
+      padding: 120px 24px;
+      text-align: center;
+      position: relative;
+      border-top: 1px solid rgba(255,255,255,0.04);
+      background: url('fundo parte 2.png') no-repeat center center;
+      background-size: cover;
+    }
+
+    #dor h2 {
+      font-size: clamp(1.8rem, 3.5vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: white;
+      max-width: 740px;
+      margin: 0 auto 32px;
+      line-height: 1.2;
+    }
+
+    #dor p {
+      font-size: 16px;
+      font-weight: 300;
+      color: rgba(247,244,242,0.6);
+      max-width: 680px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    #dor p strong {
+      color: var(--off-white);
+      font-weight: 600;
+    }
+
+    .stat-highlight {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--magenta), var(--lilac));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 800;
+      font-size: 1.1em;
+    }
+
+    /* ─── SECTION: SERVIÇOS ─── */
+    #servicos {
+      padding: 120px 24px;
+      border-top: 1px solid rgba(255,255,255,0.04);
+      position: relative;
+    }
+
+    .section-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .section-header h2 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: white;
+      line-height: 1.15;
+      max-width: 600px;
+    }
+    .section-header p {
+      font-size: 16px;
+      font-weight: 300;
+      color: rgba(247,244,242,0.55);
+      max-width: 480px;
+      margin-top: 16px;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .card {
+      border-radius: 16px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.07);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      min-height: 420px;
+      transition: transform 0.4s cubic-bezier(0.23,1,0.32,1), box-shadow 0.4s ease, border-color 0.4s ease;
+      background: #0a000a;
+    }
+    .card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(199,109,178,0.7);
+      box-shadow: 0 24px 60px rgba(84,0,79,0.5), 0 0 0 1px rgba(199,109,178,0.4), inset 0 0 40px rgba(163,60,140,0.06);
+      background: rgba(163,60,140,0.04);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    /* Foto de fundo do card */
+    .card-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center top;
+      opacity: 0.3;
+      transition: opacity 0.5s ease, transform 0.6s ease;
+    }
+    .card:hover .card-bg {
+      opacity: 0.45;
+      transform: scale(1.05);
+    }
+
+    /* Overlay gradiente sobre a foto */
+    .card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(10,0,10,0.2) 0%,
+        rgba(10,0,10,0.5) 40%,
+        rgba(10,0,10,0.92) 70%,
+        rgba(10,0,10,1) 100%
+      );
+      pointer-events: none;
+    }
+
+    /* Linha de brilho no topo do card no hover */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(199,109,178,0.8), transparent);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      z-index: 3;
+    }
+    .card:hover::before { opacity: 1; }
+
+    /* Conteúdo do card acima da foto */
+    .card-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 36px 28px 32px;
+      flex: 1;
+    }
+
+    .card-icon {
+      width: 64px; height: 64px;
+      background: rgba(163,60,140,0.15);
+      border: 1px solid rgba(199,109,178,0.4);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 28px;
+      color: var(--lilac);
+      transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 0 0 8px rgba(163,60,140,0.05);
+    }
+    .card:hover .card-icon {
+      background: rgba(163,60,140,0.3);
+      border-color: var(--magenta);
+      box-shadow: 0 0 0 8px rgba(163,60,140,0.12), 0 0 24px rgba(163,60,140,0.3);
+    }
+    .card-icon svg {
+      width: 26px; height: 26px;
+      stroke-width: 1.5;
+    }
+
+    .card h3 {
+      font-size: 22px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    .card p {
+      font-size: 13.5px;
+      font-weight: 300;
+      color: rgba(247,244,242,0.6);
+      line-height: 1.7;
+      margin-bottom: 28px;
+      flex-grow: 1;
+    }
+
+    .card-action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 26px;
+      border-radius: 40px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.04);
+      color: white;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      margin-bottom: 14px;
+      backdrop-filter: blur(8px);
+      width: 100%;
+      justify-content: center;
+      letter-spacing: 0.01em;
+    }
+    .card-action-btn:hover {
+      background: rgba(163,60,140,0.25);
+      border-color: rgba(199,109,178,0.6);
+      box-shadow: 0 0 20px rgba(163,60,140,0.2);
+    }
+    .card-action-btn svg {
+      width: 20px; height: 20px;
+      flex-shrink: 0;
+      filter: drop-shadow(0 0 4px rgba(37,211,102,0.6));
+    }
+
+    .card-action-link {
+      font-size: 12.5px;
+      color: rgba(247,244,242,0.45);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color 0.3s ease;
+      letter-spacing: 0.02em;
+    }
+    .card-action-link:hover {
+      color: rgba(199,109,178,0.9);
+    }
+
+    .card-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .card-features li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12.5px;
+      font-weight: 400;
+      color: rgba(247,244,242,0.5);
+    }
+    .card-features li::before {
+      content: '';
+      width: 16px; height: 16px;
+      min-width: 16px;
+      background: rgba(163,60,140,0.1);
+      border: 1px solid rgba(163,60,140,0.25);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%23A33C8C' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 10px;
+    }
+
+    .card-cta {
+      display: inline-block;
+      margin-top: 24px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--lilac);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .card-cta:hover { color: var(--magenta); }
+
+    /* ─── SECTION: DEPOIMENTOS ─── */
+    #metodo {
+      padding: 100px 24px;
+      border-top: 1px solid rgba(255,255,255,0.04);
+      background: linear-gradient(180deg, #0a000a 0%, #0c010c 100%);
+      overflow: hidden;
+    }
+
+    /* Carousel multi-slide */
+    .testimonials-carousel {
+      position: relative;
+      max-width: 1100px;
+      margin: 0 auto;
+      user-select: none;
+      padding: 0 60px;
+    }
+
+    .carousel-track-wrap {
+      overflow: hidden;
+    }
+
+    .carousel-track {
+      display: flex;
+      gap: 20px;
+      transition: transform 0.55s cubic-bezier(0.4,0,0.2,1);
+      will-change: transform;
+    }
+
+    .carousel-slide {
+      min-width: calc(33.333% - 14px);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: transform 0.45s ease, opacity 0.45s ease, box-shadow 0.45s ease;
+      opacity: 0.45;
+      transform: scale(0.92);
+      cursor: pointer;
+    }
+    .carousel-slide.active {
+      opacity: 1;
+      transform: scale(1);
+      box-shadow: 0 0 50px rgba(163,60,140,0.28), 0 0 0 1px rgba(199,109,178,0.18);
+    }
+
+    .carousel-slide img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    /* Nav arrows */
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(199,109,178,0.35);
+      background: rgba(10,0,10,0.75);
+      backdrop-filter: blur(12px);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.25s;
+      z-index: 10;
+      padding: 0;
+    }
+    .carousel-btn:hover {
+      background: rgba(163,60,140,0.35);
+      border-color: rgba(199,109,178,0.7);
+      box-shadow: 0 0 18px rgba(163,60,140,0.4);
+    }
+    .carousel-btn.prev { left: 6px; }
+    .carousel-btn.next { right: 6px; }
+    .carousel-btn svg { width: 18px; height: 18px; stroke: white; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* Dots */
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 32px;
+    }
+    .carousel-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      cursor: pointer;
+      transition: all 0.3s;
+      border: none;
+      padding: 0;
+    }
+    .carousel-dot.active {
+      background: var(--magenta);
+      box-shadow: 0 0 10px rgba(163,60,140,0.7);
+      width: 22px;
+      border-radius: 4px;
+    }
+
+    @media (max-width: 768px) {
+      .testimonials-carousel { padding: 0 44px; }
+      .carousel-slide { min-width: calc(80% - 10px); }
+      .carousel-btn.prev { left: 0; }
+      .carousel-btn.next { right: 0; }
+    }
+
+    /* ─── GARANTIA ─── */
+    #garantia {
+      padding: 100px 24px;
+      border-top: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .garantia-card {
+      max-width: 860px;
+      margin: 0 auto;
+      background: rgba(255,255,255,0.02);
+      box-shadow: inset 0px 1px 1px 0px rgba(199, 109, 178, 0.05), inset 0px 0px 0px 1px rgba(255,255,255,0.03);
+      border-radius: 16px;
+      padding: 56px 64px;
+      position: relative;
+      overflow: hidden;
+    }
+    .garantia-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--magenta), transparent);
+    }
+    .garantia-card::after {
+      content: '';
+      position: absolute;
+      bottom: -50px; right: -50px;
+      width: 250px; height: 250px;
+      background: radial-gradient(circle, rgba(163,60,140,0.05) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .garantia-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 32px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .garantia-header h3 {
+      font-size: 24px;
+      font-weight: 800;
+      color: white;
+      letter-spacing: -0.02em;
+    }
+
+    .risk-badge {
+      background: rgba(163,60,140,0.07);
+      border: 1px solid rgba(163,60,140,0.2);
+      border-radius: 6px;
+      padding: 8px 16px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--magenta);
+      white-space: nowrap;
+    }
+
+    .garantia-card p {
+      font-size: 15px;
+      font-weight: 300;
+      color: rgba(247,244,242,0.7);
+      line-height: 1.8;
+    }
+
+    .garantia-note {
+      font-size: 10px !important;
+      color: rgba(247,244,242,0.25) !important;
+      margin-top: 24px !important;
+      padding-top: 20px !important;
+      border-top: 1px solid rgba(255,255,255,0.04) !important;
+      letter-spacing: 0.04em !important;
+      line-height: 1.7 !important;
+    }
+
+    /* ─── FORMULÁRIO ─── */
+    #diagnostico {
+      padding: 120px 24px 160px;
+      border-top: 1px solid rgba(255,255,255,0.04);
+      background: linear-gradient(180deg, #0a000a 0%, #07000a 100%);
+    }
+
+    .form-wrapper {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .form-card {
+      background: transparent;
+      box-shadow: none;
+      border: 1px solid rgba(163,60,140,0.2);
+      border-radius: 0;
+      padding: 48px 48px;
+    }
+
+    .field {
+      margin-bottom: 20px;
+    }
+    .field label {
+      display: block;
+      font-size: 12px;
+      font-family: monospace;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(247,244,242,0.5);
+      margin-bottom: 8px;
+    }
+    .field input,
+    .field select {
+      width: 100%;
+      background: #0a000a;
+      box-shadow: none;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 24px;
+      color: var(--off-white);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      padding: 16px 20px;
+      transition: all 0.25s ease;
+      outline: none;
+      -webkit-appearance: none;
+    }
+    .field input::placeholder { color: rgba(247,244,242,0.3); }
+    .field input:focus,
+    .field select:focus {
+      background: #0a000a;
+      border-color: transparent;
+      box-shadow: 0 0 0 2px var(--magenta);
+    }
+    .field select option { background: #0a000a; }
+
+    .checkboxes { display: flex; flex-direction: column; gap: 12px; }
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+    .checkbox-item input[type="checkbox"] {
+      width: 16px; height: 16px;
+      min-width: 16px;
+      accent-color: var(--magenta);
+      cursor: pointer;
+      border-radius: 2px;
+    }
+    .checkbox-item span {
+      font-size: 14px;
+      font-weight: 400;
+      color: rgba(247,244,242,0.55);
+      transition: color 0.2s;
+    }
+    .checkbox-item:hover span { color: var(--off-white); }
+
+    .btn-submit {
+      width: 100%;
+      background: transparent;
+      color: white;
+      border: 1px solid var(--magenta);
+      border-radius: 9999px;
+      padding: 16px 24px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      margin-top: 32px;
+      box-shadow: none;
+    }
+    .btn-submit:hover {
+      box-shadow: inset 0 0 0 1px var(--magenta);
+    }
+    .btn-submit:active { transform: translateY(0) scale(0.98); }
+
+    /* ─── FAQ ─── */
+    #duvidas {
+      padding: 100px 24px;
+      border-top: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .faq-wrapper {
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    .faq-header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+
+    .faq-header h2 {
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: white;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .faq-header p {
+      font-size: 15px;
+      font-weight: 300;
+      color: rgba(247,244,242,0.55);
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .faq-item {
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px;
+      background: rgba(255,255,255,0.02);
+      overflow: hidden;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .faq-item.open {
+      border-color: rgba(163,60,140,0.25);
+      box-shadow: 0 0 28px rgba(163,60,140,0.07);
+    }
+
+    .faq-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 22px 28px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .faq-question {
+      font-size: 15px;
+      font-weight: 500;
+      color: rgba(247,244,242,0.85);
+      line-height: 1.45;
+      font-family: 'Montserrat', sans-serif;
+      transition: color 0.2s;
+    }
+
+    .faq-item.open .faq-question { color: white; }
+
+    .faq-icon {
+      flex-shrink: 0;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(247,244,242,0.5);
+      transition: all 0.3s ease;
+      font-size: 18px;
+      line-height: 1;
+      font-weight: 300;
+    }
+
+    .faq-item.open .faq-icon {
+      border-color: rgba(163,60,140,0.5);
+      color: var(--magenta);
+      background: rgba(163,60,140,0.08);
+    }
+
+    .faq-answer {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.35s ease;
+    }
+
+    .faq-item.open .faq-answer {
+      grid-template-rows: 1fr;
+    }
+
+    .faq-answer-inner {
+      overflow: hidden;
+    }
+
+    .faq-answer-text {
+      padding: 0 28px 24px;
+      border-top: 1px solid rgba(255,255,255,0.04);
+      padding-top: 16px;
+      font-size: 14px;
+      font-weight: 300;
+      color: rgba(247,244,242,0.6);
+      line-height: 1.8;
+    }
+
+    /* ─── URGENCY BAR ─── */
+    .urgency-bar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      background: linear-gradient(90deg, var(--deep-purple), var(--plum), var(--magenta), var(--plum), var(--deep-purple));
+      background-size: 300% 100%;
+      animation: urgencyShift 6s linear infinite;
+      text-align: center;
+      padding: 7px 16px;
+      font-size: 11.5px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.92);
+    }
+    @keyframes urgencyShift {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 300% 50%; }
+    }
+    .urgency-bar .urg-dot {
+      display: inline-block;
+      width: 6px; height: 6px;
+      background: #fff;
+      border-radius: 50%;
+      margin-right: 8px;
+      vertical-align: middle;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    /* Push header down to account for urgency bar */
+    header { top: 32px !important; }
+    #hero { padding-top: 152px !important; }
+
+    /* ─── FLOATING WHATSAPP ─── */
+    .wa-float {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 300;
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: #25D366;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 24px rgba(37,211,102,0.45);
+      text-decoration: none;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .wa-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 32px rgba(37,211,102,0.6);
+    }
+    .wa-float::before {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      background: rgba(37,211,102,0.25);
+      animation: waPulse 2.2s ease-out infinite;
+    }
+    .wa-float::after {
+      content: '';
+      position: absolute;
+      inset: -10px;
+      border-radius: 50%;
+      background: rgba(37,211,102,0.12);
+      animation: waPulse 2.2s ease-out 0.4s infinite;
+    }
+    @keyframes waPulse {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(1.6); opacity: 0; }
+    }
+    .wa-float svg { width: 28px; height: 28px; position: relative; z-index: 1; }
+
+    /* ─── PARA QUEM É ─── */
+    #para-quem {
+      padding: 120px 24px;
+      border-top: 1px solid rgba(255,255,255,0.04);
+      position: relative;
+    }
+
+    .para-quem-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Bento sizing */
+    .pq-card--wide { grid-column: span 2; }
+
+    .pq-card {
+      border-radius: 20px;
+      position: relative;
+      overflow: hidden;
+      cursor: default;
+      border: 1px solid rgba(255,255,255,0.07);
+      min-height: 200px;
+      padding: 32px;
+      background: #0a000a;
+      transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s cubic-bezier(0.23,1,0.32,1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Spotlight glow that follows mouse */
+    .pq-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        480px circle at var(--mouse-x, -9999px) var(--mouse-y, -9999px),
+        rgba(163,60,140,0.2),
+        transparent 45%
+      );
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .pq-card:hover::after { opacity: 1; }
+
+    /* Top shimmer line on hover */
+    .pq-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(199,109,178,0.9), transparent);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      z-index: 3;
+    }
+    .pq-card:hover::before { opacity: 1; }
+
+    .pq-card:hover {
+      border-color: rgba(199,109,178,0.55);
+      box-shadow: 0 20px 60px rgba(84,0,79,0.45), 0 0 0 1px rgba(199,109,178,0.25);
+      transform: translateY(-5px);
+    }
+
+    /* Large decorative emoji behind the content */
+    .pq-bg-icon {
+      position: absolute;
+      bottom: -12px;
+      right: 10px;
+      font-size: 110px;
+      line-height: 1;
+      opacity: 0.05;
+      pointer-events: none;
+      transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.23,1,0.32,1);
+      z-index: 0;
+      filter: grayscale(1);
+      user-select: none;
+    }
+    .pq-card:hover .pq-bg-icon {
+      opacity: 0.1;
+      transform: scale(1.1) rotate(-8deg);
+      filter: grayscale(0);
+    }
+
+    /* Content layer */
+    .pq-card-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .pq-icon {
+      font-size: 28px;
+      line-height: 1;
+      margin-bottom: 18px;
+      display: inline-block;
+    }
+
+    .pq-label {
+      font-size: 19px;
+      font-weight: 700;
+      color: white;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      margin-bottom: 10px;
+    }
+    .pq-card--wide .pq-label { font-size: 22px; }
+
+    .pq-desc {
+      font-size: 13px;
+      font-weight: 300;
+      color: rgba(247,244,242,0.48);
+      line-height: 1.65;
+    }
+
+    /* Arrow that slides in on hover */
+    .pq-arrow {
+      margin-top: auto;
+      padding-top: 20px;
+      font-size: 20px;
+      color: var(--magenta);
+      opacity: 0;
+      transform: translateX(-10px);
+      transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.23,1,0.32,1);
+    }
+    .pq-card:hover .pq-arrow {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .pq-note {
+      margin-top: 48px;
+      font-size: 13px;
+      color: rgba(247,244,242,0.35);
+      font-weight: 300;
+      text-align: center;
+    }
+    .pq-note strong { color: rgba(199,109,178,0.8); font-weight: 500; }
+
+    @media (max-width: 900px) {
+      .para-quem-grid { grid-template-columns: repeat(2, 1fr); }
+      .pq-card--wide { grid-column: span 2; }
+    }
+    @media (max-width: 500px) {
+      .para-quem-grid { grid-template-columns: 1fr; }
+      .pq-card--wide { grid-column: span 1; }
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      padding: 80px 24px 40px;
+      border-top: 1px solid rgba(255,255,255,0.04);
+      text-align: center;
+      background: linear-gradient(to top, rgba(163,60,140,0.15), transparent);
+    }
+    footer p {
+      font-size: 12px;
+      color: rgba(247,244,242,0.2);
+      letter-spacing: 0.05em;
+    }
+    .footer-ig {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+      color: rgba(247,244,242,0.45);
+      font-size: 12px;
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      transition: color 0.2s;
+    }
+    .footer-ig:hover { color: var(--lilac); }
+    .footer-ig svg { width: 18px; height: 18px; stroke: currentColor; fill: none; }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── DIVIDER ─── */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(163,60,140,0.2), transparent);
+      max-width: 200px;
+      margin: 0 auto 48px;
+    }
+
+    /* ─── ANIMATED SECTION BORDER ─── */
+    section[id] {
+      position: relative;
+    }
+    section[id]::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      height: 1px;
+      width: 0;
+      background: linear-gradient(90deg, transparent, var(--magenta), var(--lilac), transparent);
+      transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+      z-index: 5;
+      pointer-events: none;
+    }
+    section[id].border-lit::before {
+      width: 100%;
+    }
+
+    /* ─── HERO PARTICLES ─── */
+    #hero-particles {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    /* ─── TYPEWRITER ─── */
+    .typewriter-wrap {
+      display: inline;
+    }
+    .typewriter-cursor {
+      display: inline-block;
+      width: 2px;
+      height: 0.85em;
+      background: var(--lilac);
+      margin-left: 2px;
+      vertical-align: middle;
+      animation: blink 0.9s step-end infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* ─── HAMBURGER ─── */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      padding: 4px;
+      z-index: 200;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 1.5px;
+      background: rgba(247,244,242,0.8);
+      border-radius: 2px;
+      transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+      transform-origin: center;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* ─── MOBILE NAV OVERLAY ─── */
+    .mobile-nav {
+      position: fixed;
+      top: 0; right: 0;
+      height: 100vh;
+      width: min(300px, 80vw);
+      background: rgba(10,0,12,0.97);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-left: 1px solid rgba(163,60,140,0.18);
+      z-index: 150;
+      display: flex;
+      flex-direction: column;
+      padding: 100px 36px 48px;
+      gap: 8px;
+      transform: translateX(105%);
+      transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+      box-shadow: -20px 0 60px rgba(84,0,79,0.3);
+    }
+    .mobile-nav.open { transform: translateX(0); }
+    .mobile-nav a {
+      color: rgba(247,244,242,0.7);
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: 300;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      transition: color 0.2s, padding-left 0.2s;
+      letter-spacing: 0.02em;
+    }
+    .mobile-nav a:hover { color: white; padding-left: 8px; }
+    .mobile-nav .mobile-ig {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: rgba(247,244,242,0.4);
+      font-size: 13px;
+      border-bottom: none;
+      padding: 0;
+    }
+    .mobile-nav .mobile-ig svg { width: 18px; height: 18px; stroke: currentColor; fill: none; }
+    .mobile-nav .btn-nav-mobile {
+      margin-top: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 24px;
+      border: 1px solid var(--magenta);
+      border-radius: 9999px;
+      color: white;
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-bottom: 1px solid var(--magenta) !important;
+      transition: box-shadow 0.2s;
+    }
+    .mobile-nav .btn-nav-mobile:hover { box-shadow: inset 0 0 0 1px var(--magenta); padding-left: 24px; }
+
+    /* ─── OVERLAY BACKDROP ─── */
+    .nav-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 140;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .nav-backdrop.open { opacity: 1; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      header { padding: 0 20px; }
+      nav { display: none !important; }
+      .hamburger { display: flex; }
+      h1.hero-title { font-size: 2.2rem; }
+      .garantia-card { padding: 32px 24px; }
+      .garantia-header { flex-direction: column; gap: 16px; }
+      .form-card { padding: 32px 24px; }
+      .cards-grid { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-ctas { flex-direction: column; align-items: center; }
+      .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── URGENCY BAR ─── -->
+<div class="urgency-bar">
+  <span class="urg-dot"></span>
+  Últimas vagas abertas para esse mês
+</div>
+
+<!-- ─── HEADER ─── -->
+<header>
+  <a href="#" class="logo">
+    <div class="logo-mark">
+      <img src="logo-vere.svg" alt="Vére" />
+    </div>
+  </a>
+  <nav>
+    <a href="#servicos">Soluções</a>
+    <a href="#metodo">Depoimentos</a>
+    <a href="#duvidas">FAQ</a>
+    <a href="#diagnostico" class="btn-nav">Fale Conosco</a>
+  </nav>
+  <button class="hamburger" id="hamburgerBtn" aria-label="Abrir menu">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<!-- ─── MOBILE NAV ─── -->
+<div class="nav-backdrop" id="navBackdrop"></div>
+<nav class="mobile-nav" id="mobileNav">
+  <a href="#servicos" class="mobile-nav-link">Soluções</a>
+  <a href="#metodo" class="mobile-nav-link">Depoimentos</a>
+  <a href="#duvidas" class="mobile-nav-link">FAQ</a>
+  <a href="https://www.instagram.com/agenciavere/" target="_blank" rel="noopener" class="mobile-ig">
+    <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+    @agenciavere
+  </a>
+  <a href="#diagnostico" class="btn-nav-mobile mobile-nav-link">Fale Conosco</a>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section id="hero">
+  <!-- Background real image with overlay -->
+  <div class="hero-bg">
+    <div class="hero-bg-img"></div>
+    <div class="hero-bg-grid"></div>
+  </div>
+
+  <!-- Hero Particles Canvas -->
+  <canvas id="hero-particles"></canvas>
+
+  <div style="position:relative;z-index:3;display:flex;flex-direction:column;align-items:flex-start; max-width: 1200px; width: 100%; margin: 0 auto;">
+    <div class="badge">
+      <div class="badge-dot"></div>
+      <span>Posicionamento de Elite para Profissionais Premium</span>
+    </div>
+
+    <h1 class="hero-title">
+      Você investiu anos<br/>na sua formação.<br/>
+      <span class="gradient-text"><span class="typewriter-wrap" id="typewriterText"></span><span class="typewriter-cursor" id="typewriterCursor"></span></span>
+    </h1>
+
+    <p class="hero-sub">
+      A distância entre o profissional que você se tornou e a imagem que você projeta na internet está custando clientes de alto valor — que descartam seu perfil antes mesmo de conhecer sua competência.
+    </p>
+
+    <div class="hero-ctas">
+      <a href="#diagnostico" class="btn-primary">
+        Quero um Posicionamento de Elite
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#servicos" class="btn-secondary">
+        Conhecer Soluções
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── DOR REAL ─── -->
+<section id="dor">
+  <div class="fade-up">
+    
+    <h2>Por que o seu concorrente menos qualificado cobra mais caro que você?</h2>
+    <div class="divider"></div>
+    <p>
+      Pesquisadores da Carleton University (Canadá) mediram: o cérebro humano leva apenas <span class="stat-highlight">50 milissegundos</span> para formar um julgamento visual sobre qualquer interface digital — e esse julgamento raramente é revisado depois. Antes de ler uma única palavra sobre seus títulos ou sua experiência, a sua vitrine digital já decidiu se você parece <strong>caro e seguro o suficiente</strong> para o problema dele. Você não é genérico. Seu perfil é que não sabe disso ainda.
+    </p>
+  </div>
+</section>
+
+<!-- ─── SERVIÇOS ─── -->
+<section id="servicos">
+  <div class="section-header fade-up">
+    <h2>Nossos serviços</h2>
+    <p>Soluções premium para posicionar sua marca como a referência que você já é.</p>
+  </div>
+
+  <div class="cards-grid">
+
+    <!-- Social Media -->
+    <div class="card fade-up">
+      <div class="card-bg" style="background-image: url('card_social_media.png')"></div>
+      <div class="card-overlay"></div>
+      <div class="card-content">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </div>
+        <h3>Social Media</h3>
+        <p>Gestão estratégica de perfil com conteúdo que posiciona e vende por você, sem você criar uma linha sequer.</p>
+        <a href="#diagnostico" class="card-action-btn" onclick="document.getElementById('f-servico').value = 'Social Media'">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="12" fill="#25D366"/><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-1.32-.66-2.184-1.224-3.048-2.799-.232-.399-.017-.427.15-.642a.59.59 0 0 0 .134-.3c.05-.1.025-.187-.013-.262-.037-.075-.337-.812-.462-1.112-.121-.291-.244-.251-.337-.256l-.287-.005a.549.549 0 0 0-.398.187c-.137.15-.521.509-.521 1.241 0 .733.533 1.44.607 1.54.075.099 1.05 1.6 2.544 2.244 1.049.453 1.46.493 1.985.415.32-.048.98-.4 1.118-.787.138-.387.138-.718.097-.787-.04-.074-.148-.112-.32-.187zm-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884zm8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" fill="white"/></svg>
+          Fale Conosco
+        </a>
+        <a href="#diagnostico" class="card-action-link">Saiba Mais</a>
+      </div>
+    </div>
+
+    <!-- Edição de Vídeo -->
+    <div class="card fade-up" style="transition-delay:0.08s">
+      <div class="card-bg" style="background-image: url('card_edicao_video.png')"></div>
+      <div class="card-overlay"></div>
+      <div class="card-content">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+        </div>
+        <h3>Edição de Vídeo</h3>
+        <p>Cortes rítmicos, color grading cinematográfico e direção de arte que fazem o espectador parar o scroll.</p>
+        <a href="#diagnostico" class="card-action-btn" onclick="document.getElementById('f-servico').value = 'Edição de Vídeo'">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="12" fill="#25D366"/><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-1.32-.66-2.184-1.224-3.048-2.799-.232-.399-.017-.427.15-.642a.59.59 0 0 0 .134-.3c.05-.1.025-.187-.013-.262-.037-.075-.337-.812-.462-1.112-.121-.291-.244-.251-.337-.256l-.287-.005a.549.549 0 0 0-.398.187c-.137.15-.521.509-.521 1.241 0 .733.533 1.44.607 1.54.075.099 1.05 1.6 2.544 2.244 1.049.453 1.46.493 1.985.415.32-.048.98-.4 1.118-.787.138-.387.138-.718.097-.787-.04-.074-.148-.112-.32-.187zm-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884zm8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" fill="white"/></svg>
+          Fale Conosco
+        </a>
+        <a href="#diagnostico" class="card-action-link">Saiba Mais</a>
+      </div>
+    </div>
+
+    <!-- Roteirização -->
+    <div class="card fade-up" style="transition-delay:0.16s">
+      <div class="card-bg" style="background-image: url('card_roteiro.png')"></div>
+      <div class="card-overlay"></div>
+      <div class="card-content">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </div>
+        <h3>Roteirização</h3>
+        <p>Narrativas que constroem autoridade. Escrevemos o que você vai falar em vídeos, legendas e bio com impacto real.</p>
+        <a href="#diagnostico" class="card-action-btn" onclick="document.getElementById('f-servico').value = 'Roteirização'">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="12" fill="#25D366"/><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-1.32-.66-2.184-1.224-3.048-2.799-.232-.399-.017-.427.15-.642a.59.59 0 0 0 .134-.3c.05-.1.025-.187-.013-.262-.037-.075-.337-.812-.462-1.112-.121-.291-.244-.251-.337-.256l-.287-.005a.549.549 0 0 0-.398.187c-.137.15-.521.509-.521 1.241 0 .733.533 1.44.607 1.54.075.099 1.05 1.6 2.544 2.244 1.049.453 1.46.493 1.985.415.32-.048.98-.4 1.118-.787.138-.387.138-.718.097-.787-.04-.074-.148-.112-.32-.187zm-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884zm8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" fill="white"/></svg>
+          Fale Conosco
+        </a>
+        <a href="#diagnostico" class="card-action-link">Saiba Mais</a>
+      </div>
+    </div>
+
+    <!-- Criação de Site -->
+    <div class="card fade-up" style="transition-delay:0.24s">
+      <div class="card-bg" style="background-image: url('card_site.png')"></div>
+      <div class="card-overlay"></div>
+      <div class="card-content">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </div>
+        <h3>Criação de Site</h3>
+        <p>Ecossistema digital sob medida — rápido, otimizado e com um design que elimina objeções antes do primeiro contato.</p>
+        <a href="#diagnostico" class="card-action-btn" onclick="document.getElementById('f-servico').value = 'Criação de Site'">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="12" fill="#25D366"/><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-1.32-.66-2.184-1.224-3.048-2.799-.232-.399-.017-.427.15-.642a.59.59 0 0 0 .134-.3c.05-.1.025-.187-.013-.262-.037-.075-.337-.812-.462-1.112-.121-.291-.244-.251-.337-.256l-.287-.005a.549.549 0 0 0-.398.187c-.137.15-.521.509-.521 1.241 0 .733.533 1.44.607 1.54.075.099 1.05 1.6 2.544 2.244 1.049.453 1.46.493 1.985.415.32-.048.98-.4 1.118-.787.138-.387.138-.718.097-.787-.04-.074-.148-.112-.32-.187zm-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884zm8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" fill="white"/></svg>
+          Fale Conosco
+        </a>
+        <a href="#diagnostico" class="card-action-link">Saiba Mais</a>
+      </div>
+    </div>
+
+    <!-- Identidade Visual -->
+    <div class="card fade-up" style="transition-delay:0.32s">
+      <div class="card-bg" style="background-image: url('card_identidade.png')"></div>
+      <div class="card-overlay"></div>
+      <div class="card-content">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+        </div>
+        <h3>Identidade Visual</h3>
+        <p>Marca, cores, tipografia e sistema visual que fazem qualquer pessoa sentir que você é caro antes de ver o preço.</p>
+        <a href="#diagnostico" class="card-action-btn" onclick="document.getElementById('f-servico').value = 'Identidade Visual'">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="12" fill="#25D366"/><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-1.32-.66-2.184-1.224-3.048-2.799-.232-.399-.017-.427.15-.642a.59.59 0 0 0 .134-.3c.05-.1.025-.187-.013-.262-.037-.075-.337-.812-.462-1.112-.121-.291-.244-.251-.337-.256l-.287-.005a.549.549 0 0 0-.398.187c-.137.15-.521.509-.521 1.241 0 .733.533 1.44.607 1.54.075.099 1.05 1.6 2.544 2.244 1.049.453 1.46.493 1.985.415.32-.048.98-.4 1.118-.787.138-.387.138-.718.097-.787-.04-.074-.148-.112-.32-.187zm-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884zm8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" fill="white"/></svg>
+          Fale Conosco
+        </a>
+        <a href="#diagnostico" class="card-action-link">Saiba Mais</a>
+      </div>
+    </div>
+
+    <!-- Álbum de IA -->
+    <div class="card fade-up" style="transition-delay:0.40s">
+      <div class="card-bg" style="background-image: url('card_ia.png')"></div>
+      <div class="card-overlay"></div>
+      <div class="card-content">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        </div>
+        <h3>Álbum de IA</h3>
+        <p>Fotos de estúdio de alta direção criadas por inteligência artificial. Autoridade visual sem ocupar sua agenda.</p>
+        <a href="#diagnostico" class="card-action-btn" onclick="document.getElementById('f-servico').value = 'Álbum de IA'">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="12" fill="#25D366"/><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-1.32-.66-2.184-1.224-3.048-2.799-.232-.399-.017-.427.15-.642a.59.59 0 0 0 .134-.3c.05-.1.025-.187-.013-.262-.037-.075-.337-.812-.462-1.112-.121-.291-.244-.251-.337-.256l-.287-.005a.549.549 0 0 0-.398.187c-.137.15-.521.509-.521 1.241 0 .733.533 1.44.607 1.54.075.099 1.05 1.6 2.544 2.244 1.049.453 1.46.493 1.985.415.32-.048.98-.4 1.118-.787.138-.387.138-.718.097-.787-.04-.074-.148-.112-.32-.187zm-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884zm8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" fill="white"/></svg>
+          Fale Conosco
+        </a>
+        <a href="#diagnostico" class="card-action-link">Saiba Mais</a>
+      </div>
+    </div>
+
+    <!-- Criativos para Anúncios -->
+    <div class="card fade-up" style="transition-delay:0.48s">
+      <div class="card-bg" style="background-image: url('card_criativos.png')"></div>
+      <div class="card-overlay"></div>
+      <div class="card-content">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <h3>Criativos para Anúncios</h3>
+        <p>Peças visuais estratégicas e de alta conversão para Google, Meta e qualquer plataforma paga.</p>
+        <a href="#diagnostico" class="card-action-btn" onclick="document.getElementById('f-servico').value = 'Criativos para Anúncios'">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="12" fill="#25D366"/><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-1.32-.66-2.184-1.224-3.048-2.799-.232-.399-.017-.427.15-.642a.59.59 0 0 0 .134-.3c.05-.1.025-.187-.013-.262-.037-.075-.337-.812-.462-1.112-.121-.291-.244-.251-.337-.256l-.287-.005a.549.549 0 0 0-.398.187c-.137.15-.521.509-.521 1.241 0 .733.533 1.44.607 1.54.075.099 1.05 1.6 2.544 2.244 1.049.453 1.46.493 1.985.415.32-.048.98-.4 1.118-.787.138-.387.138-.718.097-.787-.04-.074-.148-.112-.32-.187zm-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884zm8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" fill="white"/></svg>
+          Fale Conosco
+        </a>
+        <a href="#diagnostico" class="card-action-link">Saiba Mais</a>
+      </div>
+    </div>
+
+    <!-- Apresentações -->
+    <div class="card fade-up" style="transition-delay:0.56s">
+      <div class="card-bg" style="background-image: url('card_apresentacoes.png')"></div>
+      <div class="card-overlay"></div>
+      <div class="card-content">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <h3>Apresentações (Slides)</h3>
+        <p>Decks institucionais com design de luxo para fechar negócios, dar aulas e fazer palestras com autoridade.</p>
+        <a href="#diagnostico" class="card-action-btn" onclick="document.getElementById('f-servico').value = 'Apresentações'">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="12" fill="#25D366"/><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-1.32-.66-2.184-1.224-3.048-2.799-.232-.399-.017-.427.15-.642a.59.59 0 0 0 .134-.3c.05-.1.025-.187-.013-.262-.037-.075-.337-.812-.462-1.112-.121-.291-.244-.251-.337-.256l-.287-.005a.549.549 0 0 0-.398.187c-.137.15-.521.509-.521 1.241 0 .733.533 1.44.607 1.54.075.099 1.05 1.6 2.544 2.244 1.049.453 1.46.493 1.985.415.32-.048.98-.4 1.118-.787.138-.387.138-.718.097-.787-.04-.074-.148-.112-.32-.187zm-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884zm8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" fill="white"/></svg>
+          Fale Conosco
+        </a>
+        <a href="#diagnostico" class="card-action-link">Saiba Mais</a>
+      </div>
+    </div>
+
+    <!-- Cartões Digitais -->
+    <div class="card fade-up" style="transition-delay:0.64s">
+      <div class="card-bg" style="background-image: url('card_cartoes_digitais.png')"></div>
+      <div class="card-overlay"></div>
+      <div class="card-content">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        </div>
+        <h3>Cartões Digitais Interativos</h3>
+        <p>Sua identidade completa a um clique — links, redes, portfólio e contato em um card moderno e elegante.</p>
+        <a href="#diagnostico" class="card-action-btn" onclick="document.getElementById('f-servico').value = 'Cartões Digitais'">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="12" fill="#25D366"/><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-1.32-.66-2.184-1.224-3.048-2.799-.232-.399-.017-.427.15-.642a.59.59 0 0 0 .134-.3c.05-.1.025-.187-.013-.262-.037-.075-.337-.812-.462-1.112-.121-.291-.244-.251-.337-.256l-.287-.005a.549.549 0 0 0-.398.187c-.137.15-.521.509-.521 1.241 0 .733.533 1.44.607 1.54.075.099 1.05 1.6 2.544 2.244 1.049.453 1.46.493 1.985.415.32-.048.98-.4 1.118-.787.138-.387.138-.718.097-.787-.04-.074-.148-.112-.32-.187zm-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884zm8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" fill="white"/></svg>
+          Fale Conosco
+        </a>
+        <a href="#diagnostico" class="card-action-link">Saiba Mais</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── PARA QUEM É ─── -->
+<section id="para-quem">
+  <div class="section-header fade-up">
+    <span class="section-label">Para quem é</span>
+    <h2>Feito para quem já é <span class="gradient-text">bom no que faz</span><br/>e quer parecer.</h2>
+    <p>Atendemos profissionais de alto valor que querem uma presença digital à altura da sua competência.</p>
+  </div>
+
+  <div class="para-quem-grid">
+
+    <!-- Advogados — WIDE (span 2) -->
+    <div class="pq-card pq-card--wide fade-up">
+      <div class="pq-bg-icon">⚖️</div>
+      <div class="pq-card-content">
+        <span class="pq-icon">⚖️</span>
+        <div class="pq-label">Advogados &amp; Juristas</div>
+        <div class="pq-desc">Autoridade visual que transmite seriedade e diferencia seu escritório no mercado jurídico.</div>
+        <div class="pq-arrow">→</div>
+      </div>
+    </div>
+
+    <!-- Psicólogos -->
+    <div class="pq-card fade-up" style="transition-delay:0.06s">
+      <div class="pq-bg-icon">🧠</div>
+      <div class="pq-card-content">
+        <span class="pq-icon">🧠</span>
+        <div class="pq-label">Psicólogos &amp; Terapeutas</div>
+        <div class="pq-desc">Presença digital acolhedora e premium que gera confiança antes do primeiro contato.</div>
+        <div class="pq-arrow">→</div>
+      </div>
+    </div>
+
+    <!-- Médicos -->
+    <div class="pq-card fade-up" style="transition-delay:0.12s">
+      <div class="pq-bg-icon">🩺</div>
+      <div class="pq-card-content">
+        <span class="pq-icon">🩺</span>
+        <div class="pq-label">Médicos &amp; Especialistas</div>
+        <div class="pq-desc">Posicionamento que reflete sua especialidade e atrai pacientes de perfil premium.</div>
+        <div class="pq-arrow">→</div>
+      </div>
+    </div>
+
+    <!-- Contadores -->
+    <div class="pq-card fade-up" style="transition-delay:0.18s">
+      <div class="pq-bg-icon">📊</div>
+      <div class="pq-card-content">
+        <span class="pq-icon">📊</span>
+        <div class="pq-label">Contadores &amp; Auditores</div>
+        <div class="pq-desc">Imagem corporativa sólida que transmite precisão, confiabilidade e credibilidade.</div>
+        <div class="pq-arrow">→</div>
+      </div>
+    </div>
+
+    <!-- Engenheiros -->
+    <div class="pq-card fade-up" style="transition-delay:0.24s">
+      <div class="pq-bg-icon">🏗️</div>
+      <div class="pq-card-content">
+        <span class="pq-icon">🏗️</span>
+        <div class="pq-label">Engenheiros &amp; Arquitetos</div>
+        <div class="pq-desc">Portfolio e identidade visual que exibem sua expertise técnica com elegância.</div>
+        <div class="pq-arrow">→</div>
+      </div>
+    </div>
+
+    <!-- Coaches — WIDE (span 2) -->
+    <div class="pq-card pq-card--wide fade-up" style="transition-delay:0.30s">
+      <div class="pq-bg-icon">🎯</div>
+      <div class="pq-card-content">
+        <span class="pq-icon">🎯</span>
+        <div class="pq-label">Coaches &amp; Mentores</div>
+        <div class="pq-desc">Marca pessoal magnética que posiciona você como referência e atrai os clientes certos.</div>
+        <div class="pq-arrow">→</div>
+      </div>
+    </div>
+
+    <!-- Consultores — WIDE (span 2) -->
+    <div class="pq-card pq-card--wide fade-up" style="transition-delay:0.36s">
+      <div class="pq-bg-icon">💼</div>
+      <div class="pq-card-content">
+        <span class="pq-icon">💼</span>
+        <div class="pq-label">Consultores de Negócios</div>
+        <div class="pq-desc">Presença digital que justifica seus honorários e atrai clientes corporativos de alto valor.</div>
+        <div class="pq-arrow">→</div>
+      </div>
+    </div>
+
+    <!-- PMEs — WIDE (span 2) -->
+    <div class="pq-card pq-card--wide fade-up" style="transition-delay:0.42s">
+      <div class="pq-bg-icon">🏢</div>
+      <div class="pq-card-content">
+        <span class="pq-icon">🏢</span>
+        <div class="pq-label">Pequenas &amp; Médias Empresas</div>
+        <div class="pq-desc">Identidade de marca profissional que compete de igual para igual com grandes players.</div>
+        <div class="pq-arrow">→</div>
+      </div>
+    </div>
+
+  </div>
+  <p class="pq-note fade-up" style="transition-delay:0.5s">Não encontrou sua área? <strong>Provavelmente atendemos você também</strong> — fale com a gente.</p>
+</section>
+
+<!-- ─── DEPOIMENTOS ─── -->
+<section id="metodo">
+  <div class="section-header fade-up">
+    <h2>O que nossos <span class="gradient-text">clientes dizem</span></h2>
+  </div>
+
+  <div class="testimonials-carousel fade-up" style="transition-delay:0.1s" id="testimonialCarousel">
+    <div class="carousel-track-wrap">
+      <div class="carousel-track" id="carouselTrack">
+        <div class="carousel-slide active" data-idx="0"><img src="1.png" alt="Depoimento de cliente 1" loading="lazy" draggable="false" /></div>
+        <div class="carousel-slide" data-idx="1"><img src="2.png" alt="Depoimento de cliente 2" loading="lazy" draggable="false" /></div>
+        <div class="carousel-slide" data-idx="2"><img src="3.png" alt="Depoimento de cliente 3" loading="lazy" draggable="false" /></div>
+        <div class="carousel-slide" data-idx="3"><img src="4.png" alt="Depoimento de cliente 4" loading="lazy" draggable="false" /></div>
+        <div class="carousel-slide" data-idx="4"><img src="5.png" alt="Depoimento de cliente 5" loading="lazy" draggable="false" /></div>
+        <div class="carousel-slide" data-idx="5"><img src="6.png" alt="Depoimento de cliente 6" loading="lazy" draggable="false" /></div>
+      </div>
+    </div>
+
+    <button class="carousel-btn prev" id="carouselPrev" aria-label="Anterior">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <button class="carousel-btn next" id="carouselNext" aria-label="Próximo">
+      <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+
+    <div class="carousel-dots" id="carouselDots">
+      <button class="carousel-dot active" data-index="0" aria-label="Slide 1"></button>
+      <button class="carousel-dot" data-index="1" aria-label="Slide 2"></button>
+      <button class="carousel-dot" data-index="2" aria-label="Slide 3"></button>
+      <button class="carousel-dot" data-index="3" aria-label="Slide 4"></button>
+      <button class="carousel-dot" data-index="4" aria-label="Slide 5"></button>
+      <button class="carousel-dot" data-index="5" aria-label="Slide 6"></button>
+    </div>
+  </div>
+
+  <script>
+  (function() {
+    const track    = document.getElementById('carouselTrack');
+    const slides   = track.querySelectorAll('.carousel-slide');
+    const dots     = document.querySelectorAll('#carouselDots .carousel-dot');
+    const total    = slides.length;
+    let current    = 0;
+    let autoTimer  = null;
+    let startX     = 0;
+    let isDragging = false;
+
+    function getSlideWidth() {
+      return slides[0].offsetWidth + 20; /* width + gap */
+    }
+
+    function goTo(idx) {
+      current = ((idx % total) + total) % total;
+      /* Center the active slide: offset so it sits in the middle of the 3-up view */
+      const offset = current * getSlideWidth() - getSlideWidth();
+      track.style.transform = `translateX(-${Math.max(0, offset)}px)`;
+      slides.forEach((s, i) => s.classList.toggle('active', i === current));
+      dots.forEach((d, i) => d.classList.toggle('active', i === current));
+    }
+
+    function startAuto() {
+      clearInterval(autoTimer);
+      autoTimer = setInterval(() => goTo(current + 1), 4000);
+    }
+
+    document.getElementById('carouselPrev').addEventListener('click', () => { goTo(current - 1); startAuto(); });
+    document.getElementById('carouselNext').addEventListener('click', () => { goTo(current + 1); startAuto(); });
+    dots.forEach(d => d.addEventListener('click', () => { goTo(+d.dataset.index); startAuto(); }));
+    slides.forEach(s => s.addEventListener('click', () => { goTo(+s.dataset.idx); startAuto(); }));
+
+    /* Swipe */
+    track.addEventListener('pointerdown', e => { startX = e.clientX; isDragging = true; track.setPointerCapture(e.pointerId); });
+    track.addEventListener('pointerup', e => {
+      if (!isDragging) return;
+      isDragging = false;
+      const diff = startX - e.clientX;
+      if (Math.abs(diff) > 40) { goTo(diff > 0 ? current + 1 : current - 1); startAuto(); }
+    });
+
+    /* Keyboard */
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowLeft')  { goTo(current - 1); startAuto(); }
+      if (e.key === 'ArrowRight') { goTo(current + 1); startAuto(); }
+    });
+
+    /* Init */
+    goTo(0);
+    startAuto();
+  })();
+  </script>
+</section>
+
+
+<!-- ─── DÚVIDAS FREQUENTES ─── -->
+<section id="duvidas">
+  <div class="faq-wrapper">
+    <div class="faq-header fade-up">
+      <h2>Antes de decidir, <span class="gradient-text">esclareça suas dúvidas</span></h2>
+    </div>
+
+    <div class="faq-list fade-up" style="transition-delay:0.1s">
+
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          <span class="faq-question">Quanto tempo do meu mês eu vou precisar dedicar para isso?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner"><p class="faq-answer-text">Nós sabemos que a sua agenda é o seu ativo mais precioso. Nosso modelo operacional foi desenhado para ser descentralizado: você participa de uma única reunião estratégica de no máximo 45 minutos no início do mês e investe os 15 minutos restantes para validar o lote de conteúdos e designs de uma vez só. O restante do trabalho é 100% nosso.</p></div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          <span class="faq-question">O marketing digital não infringe as regras do meu conselho de classe (OAB / CFP / CRM)?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner"><p class="faq-answer-text">Não da forma como nós fazemos. Nós não trabalhamos com mercantilização ou promessas milagrosas de resultados. Nosso foco é o Marketing de Percepção e Autoridade Informativa. Todo o conteúdo e estrutura de site são desenvolvidos respeitando rigorosamente os limites éticos dos provimentos e resoluções dos conselhos liberais, e você sempre faz a revisão final antes de qualquer publicação ir ao ar.</p></div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          <span class="faq-question">Eu realmente preciso aparecer em vídeos e gravar Reels?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner"><p class="faq-answer-text">A sua imagem é o maior gerador de conexão com o seu cliente de alto valor, por isso nós incentivamos o audiovisual. No entanto, você não precisa improvisar ou inventar o que falar. Nós entregamos os roteiros e scripts técnicos totalmente mastigados para a sua especialidade. Se mesmo assim você preferir não gravar vídeos no início, estruturamos sua estratégia focada em posts estáticos de alto padrão visual e artigos ricos.</p></div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          <span class="faq-question">Como funciona esse &quot;Álbum de Fotos com Inteligência Artificial&quot;?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner"><p class="faq-answer-text">É a nossa solução para acabar com sessões fotográficas exaustivas. Em vez de você bloquear um dia inteiro na sua agenda para ir a um estúdio, você nos envia fotos simples tiradas do seu próprio celular. Nossa tecnologia de IA processa essas imagens e gera retratos corporativos realistas e de altíssimo padrão, inserindo você em escritórios de luxo e cenários de prestígio com trajes impecáveis.</p></div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          <span class="faq-question">Eu já recebo muitos clientes por indicação (boca a boca). Por que preciso de um posicionamento digital?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner"><p class="faq-answer-text">Porque o comportamento do cliente premium mudou. Hoje, mesmo quando você é indicado por um colega, o cliente em potencial valida o seu nome no Google e no Instagram antes de agendar a consulta ou assinar um contrato. Se ele encontrar um perfil amador, sem consistência ou abandonado, a percepção de valor construída na indicação diminui e ele pode começar a questionar o preço dos seus honorários.</p></div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          <span class="faq-question">Vocês atendem qualquer área ou criam conteúdo específico para a minha especialidade?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner"><p class="faq-answer-text">Nosso trabalho é customizado. Nós não usamos templates genéricos ou textos de gaveta. Nós mergulhamos na sua especialidade para traduzir o seu raciocínio técnico em uma linguagem compreensível e atraente para o seu cliente ideal. Você terá um posicionamento exclusivo para o seu nicho de atuação.</p></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      // Close all
+      document.querySelectorAll('.faq-item.open').forEach(function(el) {
+        el.classList.remove('open');
+        el.querySelector('.faq-icon').textContent = '+';
+      });
+      // Open clicked if it was closed
+      if (!isOpen) {
+        item.classList.add('open');
+        btn.querySelector('.faq-icon').textContent = '−';
+      }
+    }
+  </script>
+</section>
+
+<!-- ─── FORMULÁRIO ─── -->
+<section id="diagnostico">
+  <div class="form-wrapper">
+    <div class="section-header fade-up" style="text-align:left;align-items:flex-start">
+      <h2 style="max-width:100%">Pronto para dar o <span class="gradient-text">próximo passo?</span></h2>
+      <p style="margin-top:12px">Preencha abaixo e entraremos em contato em até 24 horas.</p>
+    </div>
+
+    <div class="form-card fade-up" style="transition-delay:0.1s">
+      <div class="field">
+        <label>Nome Completo</label>
+        <input type="text" id="f-nome" placeholder="Seu nome completo" required />
+      </div>
+      <div class="field">
+        <label>WhatsApp</label>
+        <input type="text" id="whatsapp" placeholder="(11) 99999-9999" required maxlength="15" />
+      </div>
+      <div class="field">
+        <label>Área de atuação</label>
+        <input type="text" id="f-area" placeholder="Ex: Advogado, Psicólogo, Médico..." required />
+      </div>
+      <div class="field">
+        <label>Serviço de interesse</label>
+        <input type="text" id="f-servico" placeholder="Ex: Social Media, Site, Identidade Visual..." required />
+      </div>
+      <div class="field">
+        <label>Quanto deseja investir</label>
+        <input type="text" id="f-investimento" placeholder="Ex: R$ 500, R$ 1.000..." required />
+      </div>
+      <button class="btn-submit" id="btnEnviar" type="button">
+        Entrar em contato
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FLOATING WHATSAPP ─── -->
+<a href="https://wa.link/qnvy13" target="_blank" rel="noopener" class="wa-float" aria-label="Fale pelo WhatsApp">
+  <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-1.32-.66-2.184-1.224-3.048-2.799-.232-.399-.017-.427.15-.642a.59.59 0 0 0 .134-.3c.05-.1.025-.187-.013-.262-.037-.075-.337-.812-.462-1.112-.121-.291-.244-.251-.337-.256l-.287-.005a.549.549 0 0 0-.398.187c-.137.15-.521.509-.521 1.241 0 .733.533 1.44.607 1.54.075.099 1.05 1.6 2.544 2.244 1.049.453 1.46.493 1.985.415.32-.048.98-.4 1.118-.787.138-.387.138-.718.097-.787-.04-.074-.148-.112-.32-.187zm-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884zm8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+</a>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <a href="https://www.instagram.com/agenciavere/" target="_blank" rel="noopener" class="footer-ig">
+    <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+    @agenciavere
+  </a>
+  <br/>
+  <p>© 2026 Vére Agência. Todos os direitos reservados.</p>
+</footer>
+
+<script>
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(el => {
+      if (el.isIntersecting) {
+        el.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // WhatsApp mask
+  document.getElementById('whatsapp').addEventListener('input', function(e) {
+    let v = e.target.value.replace(/\D/g, '');
+    let f = v;
+    if (v.length > 2) f = '(' + v.slice(0,2) + ') ' + v.slice(2);
+    if (v.length > 7) f = '(' + v.slice(0,2) + ') ' + v.slice(2,7) + '-' + v.slice(7,11);
+    e.target.value = f.slice(0, 15);
+  });
+
+  // Header scroll effect
+  window.addEventListener('scroll', () => {
+    const h = document.querySelector('header');
+    if (window.scrollY > 50) {
+      h.style.background = 'rgba(10,0,10,0.85)';
+      h.style.borderBottomColor = 'rgba(163,60,140,0.12)';
+    } else {
+      h.style.background = 'rgba(10,0,10,0.6)';
+      h.style.borderBottomColor = 'rgba(199,109,178,0.08)';
+    }
+  });
+
+  // Scroll Spy (Highlight active nav link)
+  const sections = document.querySelectorAll("section[id]");
+  const navLinks = document.querySelectorAll("nav a:not(.btn-nav)");
+
+  window.addEventListener("scroll", () => {
+    let current = "";
+    sections.forEach((section) => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.clientHeight;
+      if (scrollY >= sectionTop - 150) {
+        current = section.getAttribute("id");
+      }
+    });
+
+    navLinks.forEach((link) => {
+      link.classList.remove("active");
+      if (link.getAttribute("href").includes(current)) {
+        link.classList.add("active");
+      }
+    });
+  });
+
+  // Magnetic Buttons Effect (smooth, clamped, correct coordinates)
+  document.querySelectorAll('.btn-primary, .btn-submit').forEach(btn => {
+    // Ensure the transition only applies to transform for the magnetic effect
+    btn.style.willChange = 'transform';
+
+    btn.addEventListener('mousemove', function(e) {
+      const rect = btn.getBoundingClientRect();
+      // Use clientX/Y — not pageX/Y — to avoid scroll offset bugs
+      const cx = rect.left + rect.width  / 2;
+      const cy = rect.top  + rect.height / 2;
+      const dx = e.clientX - cx;
+      const dy = e.clientY - cy;
+
+      // Clamp displacement: max ±8px horizontally, ±5px vertically
+      const maxX = 8, maxY = 5;
+      const tx = Math.max(-maxX, Math.min(maxX, dx * 0.25));
+      const ty = Math.max(-maxY, Math.min(maxY, dy * 0.25));
+
+      btn.style.transition = 'transform 0.15s cubic-bezier(0.23, 1, 0.32, 1)';
+      btn.style.transform  = `translate(${tx}px, ${ty}px)`;
+    });
+
+    btn.addEventListener('mouseleave', function() {
+      btn.style.transition = 'transform 0.4s cubic-bezier(0.23, 1, 0.32, 1)';
+      btn.style.transform  = 'translate(0px, 0px)';
+    });
+  });
+
+  // ─── HERO PARTICLES ───
+  (function() {
+    const canvas = document.getElementById('hero-particles');
+    const ctx = canvas.getContext('2d');
+    let W, H, particles = [];
+    const COUNT = 90;
+
+    function resize() {
+      W = canvas.width  = canvas.offsetWidth;
+      H = canvas.height = canvas.offsetHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    function rand(min, max) { return Math.random() * (max - min) + min; }
+
+    for (let i = 0; i < COUNT; i++) {
+      particles.push({
+        x: rand(0, W),
+        y: rand(0, H),
+        r: rand(0.4, 2.2),
+        alpha: rand(0.08, 0.65),
+        dx: rand(-0.18, 0.18),
+        dy: rand(-0.22, -0.05),
+        pulse: rand(0, Math.PI * 2),
+        pulseSpeed: rand(0.008, 0.022),
+        color: Math.random() > 0.5 ? '199,109,178' : '163,60,140'
+      });
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      particles.forEach(p => {
+        p.pulse += p.pulseSpeed;
+        const a = p.alpha * (0.6 + 0.4 * Math.sin(p.pulse));
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${p.color},${a})`;
+        ctx.fill();
+        p.x += p.dx;
+        p.y += p.dy;
+        if (p.y < -4) { p.y = H + 4; p.x = rand(0, W); }
+        if (p.x < -4) p.x = W + 4;
+        if (p.x > W + 4) p.x = -4;
+      });
+      requestAnimationFrame(draw);
+    }
+    draw();
+  })();
+
+  // ─── TYPEWRITER ───
+  (function() {
+    const text = 'Por que seu digital ainda comunica preço de iniciante?';
+    const el   = document.getElementById('typewriterText');
+    const cur  = document.getElementById('typewriterCursor');
+    let i = 0;
+    // Start after hero animations settle
+    setTimeout(function type() {
+      if (i <= text.length) {
+        el.textContent = text.slice(0, i);
+        i++;
+        setTimeout(type, i === text.length ? 0 : 38);
+      } else {
+        // Hide cursor after done (optional — keep it if you prefer)
+        setTimeout(() => { cur.style.display = 'none'; }, 2200);
+      }
+    }, 900);
+  })();
+
+  // ─── ANIMATED SECTION BORDERS ───
+  (function() {
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('border-lit');
+        }
+      });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('section[id]').forEach(s => sectionObserver.observe(s));
+  })();
+
+  // ─── HAMBURGER MENU ───
+  (function() {
+    const btn      = document.getElementById('hamburgerBtn');
+    const nav      = document.getElementById('mobileNav');
+    const backdrop = document.getElementById('navBackdrop');
+    const links    = document.querySelectorAll('.mobile-nav-link');
+
+    function open() {
+      btn.classList.add('open');
+      nav.classList.add('open');
+      backdrop.style.display = 'block';
+      requestAnimationFrame(() => backdrop.classList.add('open'));
+      document.body.style.overflow = 'hidden';
+    }
+    function close() {
+      btn.classList.remove('open');
+      nav.classList.remove('open');
+      backdrop.classList.remove('open');
+      setTimeout(() => { backdrop.style.display = 'none'; }, 300);
+      document.body.style.overflow = '';
+    }
+
+    btn.addEventListener('click', () => nav.classList.contains('open') ? close() : open());
+    backdrop.addEventListener('click', close);
+    links.forEach(l => l.addEventListener('click', close));
+  })();
+
+  // ─── PARALLAX HERO ───
+  (function() {
+    const heroBg = document.querySelector('.hero-bg-img');
+    if (!heroBg) return;
+    window.addEventListener('scroll', () => {
+      const scrolled = window.scrollY;
+      const rate = scrolled * 0.25;
+      heroBg.style.transform = `translateY(${rate}px)`;
+    }, { passive: true });
+  })();
+
+  // ─── FORM → WHATSAPP ───
+  (function() {
+    const btn = document.getElementById('btnEnviar');
+    if (!btn) return;
+    btn.addEventListener('click', function() {
+      const nome        = (document.getElementById('f-nome')?.value || '').trim();
+      const whatsapp    = (document.getElementById('whatsapp')?.value || '').trim();
+      const area        = (document.getElementById('f-area')?.value || '').trim();
+      const servico     = (document.getElementById('f-servico')?.value || '').trim();
+      const investimento = (document.getElementById('f-investimento')?.value || '').trim();
+
+      if (!nome || !whatsapp || !area || !servico || !investimento) {
+        // Highlight empty fields
+        [['f-nome', nome], ['whatsapp', whatsapp], ['f-area', area], ['f-servico', servico], ['f-investimento', investimento]].forEach(([id, val]) => {
+          const el = document.getElementById(id);
+          if (el && !val) { el.style.boxShadow = '0 0 0 2px #A33C8C'; setTimeout(() => el.style.boxShadow = '', 2500); }
+        });
+        return;
+      }
+
+      const msg = encodeURIComponent(
+        `Olá! Vim pelo site da Vére\n\n` +
+        `*Nome:* ${nome}\n` +
+        `*WhatsApp:* ${whatsapp}\n` +
+        `*Área de atuação:* ${area}\n` +
+        `*Serviço de interesse:* ${servico}\n` +
+        `*Investimento desejado:* ${investimento}`
+      );
+
+      const waUrl = `https://wa.me/554187176857?text=${msg}`;
+      window.open(waUrl, '_blank');
+    });
+  })();
+
+  // ─── PARA QUEM: SPOTLIGHT MOUSE TRACKING ───
+  (function() {
+    document.querySelectorAll('.pq-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+        card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.setProperty('--mouse-x', '-9999px');
+        card.style.setProperty('--mouse-y', '-9999px');
+      });
+    });
+  })();
+</script>
+</body>
+</html>
